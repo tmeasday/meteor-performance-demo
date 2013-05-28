@@ -1,5 +1,5 @@
 N_DATA = 1000;
-DATA_LENGTH = 50 * 1000;
+DATA_LENGTH = 500;
 
 Data = new Meteor.Collection('data');
 
@@ -17,6 +17,10 @@ if (Meteor.isServer) {
 
     console.log('creating fixtures');
     for (var i = 0; i < N_DATA; i++) {
+      var contents = [];
+      for (var j = 0; j < DATA_LENGTH; j++)
+        contents.push(Random.id());
+        
       Data.insert({
         contents: contents,
         part: i % 10
