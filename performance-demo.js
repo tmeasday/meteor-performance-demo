@@ -1,5 +1,6 @@
 N_DATA = 1000;
 DATA_LENGTH = 500;
+UPDATE_FREQUENCY = 300;
 
 Data = new Meteor.Collection('data');
 
@@ -23,6 +24,7 @@ if (Meteor.isServer) {
         
       Data.insert({
         contents: contents,
+        index: i,
         part: i % 10
       });
     }
@@ -34,4 +36,10 @@ if (Meteor.isServer) {
       return Data.find({part: part});
     }
   });
+  
+  Meteor.setInterval(function() {
+    var index = Math.floor(Math.random() * DATA_LENGTH);
+    console.log(index);
+    Data.update({index: index}, {$push: {contents: Random.id()}})
+  }, UPDATE_FREQUENCY);
 }
